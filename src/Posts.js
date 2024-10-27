@@ -17,19 +17,22 @@ export default function Posts() {
   )
 }
 
-function Post({srcUsuario, usuario, srcPost, altPost, curtidas}) {
-  
+function Post({ srcUsuario, usuario, srcPost, altPost, curtidas }) {
+
   const [bookmark, setBookmark] = React.useState("bookmark-outline");
   const [heart, setHeart] = React.useState("heart-outline");
   const [heartColor, setHeartColor] = React.useState("");
+  const [likes, setCurtidas] = React.useState(curtidas);
 
   function likePost() {
     if (heart === "heart-outline") {
       setHeart("heart");
       setHeartColor("danger");
+      setCurtidas(likes + 1);
     } else {
       setHeart("heart-outline");
       setHeartColor("");
+      setCurtidas(likes - 1);
     }
   }
 
@@ -37,9 +40,10 @@ function Post({srcUsuario, usuario, srcPost, altPost, curtidas}) {
     if (heart === "heart-outline") {
       setHeart("heart");
       setHeartColor("danger");
+      setCurtidas(likes + 1);
     }
   }
-  
+
   return (
     <div className="post">
       <div className="topo">
@@ -53,7 +57,7 @@ function Post({srcUsuario, usuario, srcPost, altPost, curtidas}) {
       </div>
 
       <div className="conteudo">
-        <img src={srcPost} alt={altPost} onClick={likePostImage}/>
+        <img src={srcPost} alt={altPost} onClick={likePostImage} />
       </div>
 
       <div className="fundo">
@@ -64,14 +68,14 @@ function Post({srcUsuario, usuario, srcPost, altPost, curtidas}) {
             <ion-icon name="paper-plane-outline"></ion-icon>
           </div>
           <div>
-            <ion-icon name={bookmark} onClick={() => (bookmark === "bookmark-outline" ? setBookmark("bookmark") : setBookmark("bookmark-outline"))}></ion-icon>
+            <ion-icon name={bookmark} onClick={() => bookmark === "bookmark-outline" ? setBookmark("bookmark") : setBookmark("bookmark-outline")}></ion-icon>
           </div>
         </div>
 
         <div className="curtidas">
           <img src="assets/respondeai.svg" alt="respondeai" />
           <div className="texto">
-            Curtido por <strong>respondeai</strong> e <strong>outras {curtidas} pessoas</strong>
+            Curtido por <strong>respondeai</strong> e <strong>outras {likes} pessoas</strong>
           </div>
         </div>
       </div>
